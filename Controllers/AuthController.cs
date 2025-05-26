@@ -39,4 +39,14 @@ public class AuthController : ControllerBase
 
         return usuario is not null ? Ok(usuario) : Unauthorized();
     }
+
+
+    [HttpGet("usuarios")]
+    public async Task<IActionResult> usuarios()
+    {
+        using var connection = _connectionFactory.CreateConnection();
+        var usuario = await connection.QueryAsync<Usuario>("SELECT * FROM Usuarios ");
+
+        return usuario is not null ? Ok(usuario) : BadRequest();
+    }
 }
